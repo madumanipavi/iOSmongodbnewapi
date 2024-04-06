@@ -72,13 +72,29 @@ async function update(req, res) {
   }
 }
 
+// async function getbycatid(req, res) {
+//   try {
+//     const id = req.params.id;
+//     const items = await Product.find({ subcategoryID: id }).exec();
+
+//     if (items.length > 0) {
+//       res.status(200).json(items);
+//     } else {
+//       res.status(404).send('Items not found');
+//     }
+//   } catch (error) {
+//     console.error('Error finding items by sub category ID:', error);
+//     res.status(500).json({ error: 'Internal Server Error' });
+//   }
+// }
+
 async function getbycatid(req, res) {
   try {
     const id = req.params.id;
     const items = await Product.find({ subcategoryID: id }).exec();
 
     if (items.length > 0) {
-      res.status(200).json(items);
+      res.status(200).json({ Products: items });
     } else {
       res.status(404).send('Items not found');
     }
