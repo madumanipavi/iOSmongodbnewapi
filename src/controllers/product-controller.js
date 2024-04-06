@@ -11,10 +11,19 @@ async function create(req, res) {
   }
 }
 
+// async function get(req, res) {
+//   try {
+//     const products = await Product.find({});
+//     res.status(201).json(products);
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// }
+
 async function get(req, res) {
   try {
     const products = await Product.find({});
-    res.status(201).json(products);
+    res.status(201).json({ Products: products });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
