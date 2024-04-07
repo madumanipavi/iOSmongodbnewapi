@@ -1,4 +1,5 @@
 const Product = require('../models/productModel');
+const SubCategory = require('../models/subCategoryModel');
 require('dotenv').config();
 
 async function create(req, res) {
@@ -104,6 +105,32 @@ async function getbycatid(req, res) {
   }
 }
 
+async function getbycatname(req, res) {
+  try {
+    const name = req.params.name;
+    
+    // Find the subcategory by name
+    const subcategory = await SubCategory.findOne({ Subcategory_name: name }).exec();
+    
+    if (!subcategory) {
+      return res.status(404).send('Subcategory not found');
+    }
+
+    // Find products by subcategory ID
+    const items = await Product.find({ subcategoryID: subcategory._id }).exec();
+
+    if (items.length > 0) {
+      res.status(200).json({ Products: items });
+    } else {
+      res.status(404).send('Products not found for the subcategory');
+    }
+  } catch (error) {
+    console.error('Error finding products by subcategory name:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+}
+
+
 module.exports = {
   get: get,
   getbyid: getbyid,
@@ -111,4 +138,5 @@ module.exports = {
   remove: remove,
   update: update,
   getbycatid: getbycatid,
+  getbycatname: getbycatname
 };

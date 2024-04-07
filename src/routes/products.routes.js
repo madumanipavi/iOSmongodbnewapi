@@ -14,6 +14,8 @@ router.post('/', controller.create);
 router.get('/:id', controller.getbyid);
 
 router.get('/catogory/:id', controller.getbycatid);
+router.get('/category/name/:name', controller.getbycatname);
+
 
 router.delete('/:id', controller.remove);
 
